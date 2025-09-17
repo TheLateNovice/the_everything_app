@@ -3,67 +3,84 @@
 /* General styling for the entire page */
 body {
 	font-family: Arial, sans-serif;
-	background-color: rgb(255, 255, 255);
+	background-color: rgba(224, 11, 11, 0.356);
 	margin: 0;
 }
 
 .wrapper {
-	max-width: 1100px;
+	width: 100%;
 	margin: 15px auto;
+	display: flex;
+	justify-content: center;
 }
 
 .app-name {
     text-align: center;
-    background-color: rgb(0, 204, 255);
 }
 
+.navigation ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	display: flex;
+	justify-content: center; 
+}
 /* Calendar container */
 .container-calendar {
 	background: #ffffff;
 	padding: 15px;
-	max-width: 900px;
+	width: 75%;
 	margin: 0 auto;
 	overflow: auto;
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-	display: flex;
-	justify-content: space-between;
 }
 
 /* Event section styling */
 #event-section {
-	padding: 10px;
-	background: #f5f5f5;
-	margin: 20px 0;
+	width: 75%;
+	margin: 20px auto;
+	padding: 20px;
+	background: #ffffff;
 	border: 1px solid #ccc;
-}
-
-.container-calendar #left h1 {
-	color: green;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 	text-align: center;
-	background-color: #f2f2f2;
-	margin: 0;
-	padding: 10px 0;
 }
 
 #event-section h3 {
 	color: green;
-	font-size: 18px;
-	margin: 0;
+	font-size: 20px;
+	margin-bottom: 15px;
+	text-align: center;
+}
+
+.event-form {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 10px;
+	max-width: 600px;
+	margin: 0 auto;
 }
 
 #event-section input[type="date"],
 #event-section input[type="text"] {
-	margin: 10px 0;
-	padding: 5px;
+	margin: 5px 0;
+	padding: 8px;
 	width: 80%;
+	border: 1px solid #ccc;
+	border-radius: 4px;
 }
 
 #event-section button {
 	background: green;
 	color: white;
 	border: none;
-	padding: 5px 10px;
+	padding: 10px 20px;
 	cursor: pointer;
+	border-radius: 4px;
+	font-size: 16px;
+	margin-top: 10px;
 }
 
 .event-marker {
@@ -104,26 +121,37 @@ body {
 
 /* Reminder section styling */
 #reminder-section {
-	padding: 10px;
-	background: #f5f5f5;
-	margin: 20px 0;
+	width: 75%;
+	margin: 20px auto;
+	padding: 20px;
+	background: #ffffff;
 	border: 1px solid #ccc;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
 #reminder-section h3 {
 	color: green;
-	font-size: 18px;
-	margin: 0;
+	font-size: 20px;
+	margin-bottom: 15px;
+	text-align: center;
 }
 
 #reminderList {
 	list-style: none;
 	padding: 0;
+	max-width: 800px;
+	margin: 0 auto;
 }
 
 #reminderList li {
-	margin: 5px 0;
+	margin: 10px 0;
+	padding: 10px;
 	font-size: 16px;
+	background: #f9f9f9;
+	border-radius: 4px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 }
 
 /* Style for the delete buttons */
@@ -151,14 +179,16 @@ body {
 .table-calendar {
 	border-collapse: collapse;
 	width: 100%;
+	margin: 0 auto;
 }
 
 .table-calendar td,
 .table-calendar th {
-	padding: 5px;
+	padding: 12px;
 	border: 1px solid #e2e2e2;
 	text-align: center;
 	vertical-align: top;
+	height: 40px;
 }
 
 /* Date picker */

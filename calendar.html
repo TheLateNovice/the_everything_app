@@ -9,12 +9,12 @@
 <body>
     <header>
         <h1 class="app-name">The Everything App</h1>
-        <nav class="navigation">
+        <nav>
             <ul>
-                <li>Home</li>
-                <li>Calendar</li>
-                <li>Banking</li>
-                <li>Stocks</li>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="calendar.html" class="active">Calendar</a></li>
+                <li><a href="banking.html">Banking</a></li>
+                <li><a href="stocks.html">Stocks</a></li>
             </ul>
         </nav>
     </header>
@@ -66,7 +66,10 @@
         <section id="event-section">
             <h3>Add Event</h3>
             <div class="event-form">
-                <input type="date" id="eventDate" aria-label="Event Date">
+                <div class="date-input-container">
+                    <input type="date" id="eventDate" aria-label="Event Date" style="display: none;">
+                    <input type="text" id="eventDateDisplay" readonly placeholder="DD/MM/YYYY" aria-label="Event Date Display">
+                </div>
                 <input type="text" id="eventTitle" placeholder="Event Title" aria-label="Event Title">
                 <input type="text" id="eventDescription" placeholder="Event Description" aria-label="Event Description">
                 <button id="addEventBtn" onclick="addEvent()">Add</button>

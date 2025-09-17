@@ -16,16 +16,48 @@ body {
 
 .app-name {
     text-align: center;
+    margin-bottom: 20px;
 }
 
-.navigation ul {
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
-	overflow: hidden;
-	display: flex;
-	justify-content: center; 
+nav {
+    width: 75%;
+    margin: 0 auto 20px;
+    background: #ffffff;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+nav ul li {
+    flex: 1;
+    text-align: center;
+}
+
+nav ul li a {
+    display: block;
+    padding: 15px 0;
+    text-decoration: none;
+    color: #333;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+nav ul li a:hover {
+    background-color: #f0f0f0;
+}
+
+nav ul li a.active {
+    background-color: #e0e0e0;
+    color: #000;
+    font-weight: 600;
+}
+
 /* Calendar container */
 .container-calendar {
 	background: #ffffff;
@@ -57,8 +89,8 @@ body {
 .event-form {
 	display: flex;
 	flex-direction: column;
-	align-items: center;
 	gap: 10px;
+	width: 80%;
 	max-width: 600px;
 	margin: 0 auto;
 }
@@ -67,9 +99,21 @@ body {
 #event-section input[type="text"] {
 	margin: 5px 0;
 	padding: 8px;
-	width: 80%;
+	width: 100%;
 	border: 1px solid #ccc;
 	border-radius: 4px;
+	box-sizing: border-box;
+}
+
+.date-input-container {
+	position: relative;
+	width: 100%;
+}
+
+#eventDateDisplay {
+	background-color: #fff;
+	cursor: pointer;
+	width: 100%;
 }
 
 #event-section button {

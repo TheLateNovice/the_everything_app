@@ -17,6 +17,7 @@ body {
 .app-name {
     text-align: center;
     margin-bottom: 20px;
+	color: white;
 }
 
 nav {
@@ -43,7 +44,7 @@ nav ul li a {
     display: block;
     padding: 15px 0;
     text-decoration: none;
-    color: #333;
+    color: green;
     transition: all 0.3s ease;
     font-weight: 500;
 }
@@ -131,16 +132,26 @@ nav ul li a.active {
 	position: relative;
 }
 
-.event-marker::after {
-	content: '';
-	display: block;
-	width: 6px;
-	height: 6px;
-	background-color: red;
-	border-radius: 50%;
+.event-dots {
+	display: flex;
+	gap: 2px;
+	align-items: center;
+	justify-content: center;
 	position: absolute;
-	bottom: 0;
+	bottom: 2px;
 	left: 0;
+	right: 0;
+	height: 8px;
+}
+
+.event-dot {
+	color: rgba(224, 11, 11, 0.356);
+	font-size: 14px;
+	line-height: 1;
+}
+
+.selected .event-dot {
+	color: white;
 }
 
 /* event tooltip styling */
@@ -178,35 +189,96 @@ nav ul li a.active {
 	font-size: 20px;
 	margin-bottom: 15px;
 	text-align: center;
+	width: 75%;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 #reminderList {
 	list-style: none;
-	padding: 0;
-	max-width: 800px;
+	padding: 20px;
+	width: 75%;
 	margin: 0 auto;
 }
 
 #reminderList li {
-	margin: 10px 0;
-	padding: 10px;
-	font-size: 16px;
+	margin: 15px 0;
+	padding: 20px;
+	font-size: 14px;
 	background: #f9f9f9;
-	border-radius: 4px;
+	border: 1px solid #ccc;
+	border-radius: 8px;
 	display: flex;
-	justify-content: space-between;
+	flex-direction: column;
 	align-items: center;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	position: relative;
 }
+
+.reminder-content {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	width: 100%;
+}
+
+.reminder-date {
+	font-size: 14px;
+	font-weight: bold;
+	color: #333;
+	text-align: center;
+	margin-bottom: 10px;
+	width: 100%;
+}
+
+.reminder-title,
+.reminder-description {
+	width: 75%;
+	line-height: 1.5;
+	padding: 12px;
+	background-color: rgba(224, 11, 11, 0.356);
+	border-radius: 4px;
+	text-align: center;
+	box-sizing: border-box;
+	margin: 0 auto;
+	height: auto;
+	min-height: fit-content;
+}
+
+.reminder-title {
+	font-weight: bold;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.reminder-description {
+	white-space: pre-wrap;
+	word-wrap: break-word;
+}
+
+
 
 /* Style for the delete buttons */
 .delete-event {
+	position: absolute;
+	top: 20px;
+	right: 20px;
 	background: rgb(237, 19, 19);
 	color: white;
-	border: none;
-	padding: 5px 10px;
+	border: 1px solid rgb(200, 0, 0);
 	cursor: pointer;
-	margin-left: 10px;
-	align-items: right;
+	border-radius: 4px;
+	font-size: 14px;
+	padding: 2px 6px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: background-color 0.3s ease;
+	line-height: 1;
+}
+
+.delete-event:hover {
+	background: rgb(200, 0, 0);
 }
 
 /* Buttons in the calendar */
@@ -224,31 +296,54 @@ nav ul li a.active {
 	border-collapse: collapse;
 	width: 100%;
 	margin: 0 auto;
+	table-layout: fixed;
 }
 
-.table-calendar td,
 .table-calendar th {
-	padding: 12px;
+	padding: 8px;
 	border: 1px solid #e2e2e2;
 	text-align: center;
+	width: 50px;
+	position: relative;
+}
+
+.table-calendar td {
+	padding: 4px;
+	border: 1px solid #e2e2e2;
+	text-align: center;
+	width: 50px;
+	height: 50px;
+	position: relative;
 	vertical-align: top;
-	height: 40px;
 }
 
 /* Date picker */
+.date-picker {
+	min-height: 54px;
+	position: relative;
+}
+
+.date-picker span {
+	display: block;
+	padding: 4px 0;
+}
+
 .date-picker.selected {
-	background-color: #f2f2f2;
+	background-color: rgba(224, 11, 11, 0.356);
 	font-weight: bold;
-	outline: 1px dashed #00BCD4;
+	color: white;
 }
 
 .date-picker.selected span {
-	border-bottom: 2px solid currentColor;
+	border-bottom: 2px solid white;
+	display: inline-block;
+	min-width: 24px;
+	padding: 0 2px;
 }
 
 /* Day-specific styling */
 .date-picker:nth-child(1) {
-	color: rgb(0, 204, 255);
+	color: green;
 	/* Sunday */
 }
 
@@ -268,6 +363,7 @@ nav ul li a.active {
 #monthAndYear {
 	text-align: center;
 	margin-top: 0;
+	color: green;
 }
 
 /* Navigation buttons */

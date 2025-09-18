@@ -95,15 +95,32 @@ function addEvent() {
     const description = elements.eventDescription.value;
 
     if (date && title) {
-        state.events.push({
+        // Create new event
+        const newEvent = {
             id: state.eventIdCounter++,
             date,
             title,
             description
-        });
+        };
         
+        // Add new event to the array
+        state.events.push(newEvent);
+        
+        // Clear inputs and refresh calendar
         clearEventInputs();
         showCalendar(state.currentMonth, state.currentYear);
+        
+        // Get the date parts to update the correct month view
+        const eventDate = new Date(date);
+        const eventMonth = eventDate.getMonth();
+        const eventYear = eventDate.getFullYear();
+        
+        // If the event is for a different month, navigate to that month
+        if (eventMonth !== state.currentMonth || eventYear !== state.currentYear) {
+            state.currentMonth = eventMonth;
+            state.currentYear = eventYear;
+            showCalendar(state.currentMonth, state.currentYear);
+        }
     }
 }
 
@@ -123,21 +140,44 @@ function clearEventInputs() {
 
 function displayReminders() {
     elements.reminderList.innerHTML = "";
-    state.events.forEach(event => {
+    
+    // Get current month events and sort them by date
+    const currentMonthEvents = state.events
+        .filter(event => {
+            const eventDate = new Date(event.date);
+            return eventDate.getMonth() === state.currentMonth && 
+                   eventDate.getFullYear() === state.currentYear;
+        })
+        .sort((a, b) => {
+            const dateA = new Date(a.date);
+            const dateB = new Date(b.date);
+            return dateA - dateB;
+        });
+
+    currentMonthEvents.forEach(event => {
         const eventDate = new Date(event.date);
-        if (eventDate.getMonth() === state.currentMonth && 
-            eventDate.getFullYear() === state.currentYear) {
-            const listItem = document.createElement("li");
-            listItem.innerHTML = `<strong>${event.title}</strong> - ${event.description} on ${eventDate.toLocaleDateString()}`;
+        const day = String(eventDate.getDate()).padStart(2, '0');
+        const month = String(eventDate.getMonth() + 1).padStart(2, '0');
+        const year = eventDate.getFullYear();
+        const formattedDate = `${day}/${month}/${year}`;
+        
+        const listItem = document.createElement("li");
+        listItem.innerHTML = `
+            <div class="reminder-content">
+                <div class="reminder-date">${formattedDate}</div>
+                <div class="reminder-title">${event.title}</div>
+                <div class="reminder-description">${event.description}</div>
+            </div>
+        `;
 
-            const deleteButton = document.createElement("button");
-            deleteButton.className = "delete-event";
-            deleteButton.textContent = "Delete";
-            deleteButton.onclick = () => deleteEvent(event.id);
+        const deleteButton = document.createElement("button");
+        deleteButton.className = "delete-event";
+        deleteButton.innerHTML = "&times;";
+        deleteButton.title = "Delete reminder";
+        deleteButton.onclick = () => deleteEvent(event.id);
 
-            listItem.appendChild(deleteButton);
-            elements.reminderList.appendChild(listItem);
-        }
+        listItem.appendChild(deleteButton);
+        elements.reminderList.appendChild(listItem);
     });
 }
 
@@ -192,12 +232,33 @@ function showCalendar(month, year) {
                     cell.className = "date-picker";
                     cell.innerHTML = `<span>${date}</span>`;
 
+                    cell.className = "date-picker";
+                    
                     if (date === TODAY.getDate() && year === TODAY.getFullYear() && month === TODAY.getMonth()) {
-                        cell.className = "date-picker selected";
+                        cell.classList.add("selected");
                     }
 
-                    if (hasEventOnDate(date, month, year)) {
+                    const eventsOnDate = getEventsOnDate(date, month, year);
+                    if (eventsOnDate.length > 0) {
                         cell.classList.add("event-marker");
+                        if (date === TODAY.getDate() && year === TODAY.getFullYear() && month === TODAY.getMonth()) {
+                            cell.classList.add("selected");
+                        }
+                        
+                        // Create dots container
+                        const dotsContainer = document.createElement("div");
+                        dotsContainer.className = "event-dots";
+                        
+                        // Add a dot for each event (up to 3 dots)
+                        const numDots = Math.min(eventsOnDate.length, 3);
+                        for (let i = 0; i < numDots; i++) {
+                            const dot = document.createElement("span");
+                            dot.className = "event-dot";
+                            dot.textContent = "•";
+                            dotsContainer.appendChild(dot);
+                        }
+                        
+                        cell.appendChild(dotsContainer);
                         cell.appendChild(createEventTooltip(date, month, year));
                     }
 
@@ -227,7 +288,7 @@ function createEventTooltip(date, month, year) {
     eventsOnDate.forEach(event => {
         const eventDate = new Date(event.date);
         const eventElement = document.createElement("p");
-        eventElement.innerHTML = `<strong>${event.title}</strong> - ${event.description} on ${eventDate.toLocaleDateString()}`;
+        eventElement.innerHTML = `<strong>${event.title}</strong> ${event.description} on ${eventDate.toLocaleDateString()}`;
         tooltip.appendChild(eventElement);
     });
     
